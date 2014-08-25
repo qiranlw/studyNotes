@@ -7,15 +7,15 @@ Spring 不但提供了一个功能全面的应用开发框架，本身还拥有�
 
 在这个分为两部分的文章中，我们将从众多的 Spring 工具类中遴选出那些好用的工具类介绍给大家。第 1 部分将介绍与文件资源操作和 Web 相关的工具类。在 第 2 部分 中将介绍特殊字符转义和方法入参检测工具类。
 
-## 文件资源操作 ##
+# 文件资源操作 #
 
 文件资源的操作是应用程序中常见的功能，如当上传一个文件后将其保存在特定目录下，从指定地址加载一个配置文件等等。我们一般使用 JDK 的 I/O 处理类完成这些操作，但对于一般的应用程序来说，JDK 的这些操作类所提供的方法过于底层，直接使用它们进行文件操作不但程序编写复杂而且容易产生错误。相比于 JDK 的 File，Spring 的 Resource 接口（资源概念的描述接口）抽象层面更高且涵盖面更广，Spring 提供了许多方便易用的资源操作工具类，它们大大降低资源操作的复杂度，同时具有更强的普适性。这些工具类不依赖于 Spring 容器，这意味着您可以在程序中象一般普通类一样使用它们。
 
-### 加载文件资源 ###
+## 加载文件资源 ##
 
 Spring 定义了一个 org.springframework.core.io.Resource 接口，Resource 接口是为了统一各种类型不同的资源而定义的，Spring 提供了若干 Resource 接口的实现类，这些实现类可以轻松地加载不同类型的底层资源，并提供了获取文件名、URL 地址以及资源内容的操作方法。
 
-### 访问文件资源 ###
+## 访问文件资源 ##
 
 假设有一个文件地位于 Web 应用的类路径下，您可以通过以下方式对这个文件资源进行访问：
 
@@ -88,7 +88,7 @@ Spring 定义了一个 org.springframework.core.io.Resource 接口，Resource �
 
 ResourceUtils 的 getFile(String resourceLocation) 方法支持带特殊前缀的资源地址，这样，我们就可以在不和 Resource 实现类打交道的情况下使用 Spring 文件资源加载的功能了。
 
-### 本地化文件资源 ###
+## 本地化文件资源 ##
 
 本地化文件资源是一组通过本地化标识名进行特殊命名的文件，Spring 提供的 LocalizedResourceHelper 允许通过文件资源基名和本地化实体获取匹配的本地化文件资源并以 Resource 对象返回。假设在类路径的 i18n 目录下，拥有一组基名为 message 的本地化文件资源，我们通过以下实例演示获取对应中国大陆和美国的本地化文件资源：
 
@@ -109,4 +109,45 @@ ResourceUtils 的 getFile(String resourceLocation) 方法支持带特殊前缀�
 			System.out.println("fileName(cn):"+msg_cn.getFilename());
 		}
 	}
+
+虽然 JDK 的 java.util.ResourceBundle 类也可以通过相似的方式获取本地化文件资源，但是其返回的是 ResourceBundle 类型的对象。如果您决定统一使用 Spring 的 Resource 接表征文件资源，那么 LocalizedResourceHelper 就是获取文件资源的非常适合的帮助类了。
+
+## 文件操作 ##
+
+在使用各种 Resource 接口的实现类加载文件资源后，经常需要对文件资源进行读取、拷贝、转存等不同类型的操作。您可以通过 Resource 接口所提供了方法完成这些功能，不过在大多数情况下，通过 Spring 为 Resource 所配备的工具类完成文件资源的操作将更加方便。
+
+### 文件内容拷贝 ###
+
+第一个我们要认识的是 FileCopyUtils，它提供了许多一步式的静态操作方法，能够将文件内容拷贝到一个目标 byte[]、String 甚至一个输出流或输出文件中。下面的实例展示了 FileCopyUtils 具体使用方法：
+
+清单 4. FileCopyUtilsExample
+
+	package com.baobaotao.io;
+	import java.io.ByteArrayOutputStream;
+	import java.io.File;
+	import java.io.FileReader;
+	import java.io.OutputStream;
+	import org.springframework.core.io.ClassPathResource;
+	import org.springframework.core.io.Resource;
+	import org.springframework.util.FileCopyUtils;
+	public class FileCopyUtilsExample {
+		public static void main(String[] args) throws Throwable {
+			Resource res = new ClassPathResource("conf/file1.txt");
+			// ① 将文件内容拷贝到一个 byte[] 中
+			byte[] fileData = FileCopyUtils.copyToByteArray(res.getFile());
+			// ② 将文件内容拷贝到一个 String 中
+			String fileStr = FileCopyUtils.copyToString(new FileReader(res.getFile()));
+			// ③ 将文件内容拷贝到另一个目标文件
+			FileCopyUtils.copy(res.getFile(), new File(res.getFile().getParent()+ "/file2.txt"));
+			// ④ 将文件内容拷贝到一个输出流中
+			OutputStream os = new ByteArrayOutputStream();
+			FileCopyUtils.copy(res.getInputStream(), os);
+		}
+	}
+
+往往我们都通过直接操作 InputStream 读取文件的内容，但是流操作的代码是比较底层的，代码的面向对象性并不强。通过 FileCopyUtils 读取和拷贝文件内容易于操作且相当直观。如在 ① 处，我们通过 FileCopyUtils 的 copyToByteArray(File in) 方法就可以直接将文件内容读到一个 byte[] 中；另一个可用的方法是 copyToByteArray(InputStream in)，它将输入流读取到一个 byte[] 中。
+
+如果是文本文件，您可能希望将文件内容读取到 String 中，此时您可以使用 copyToString(Reader in) 方法，如 ② 所示。使用 FileReader 对 File 进行封装，或使用 InputStreamReader 对 InputStream 进行封装就可以了。
+
+FileCopyUtils 还提供了多个将文件内容拷贝到各种目标对象中的方法，这些方法包括：
 
