@@ -151,3 +151,8 @@ ResourceUtils 的 getFile(String resourceLocation) 方法支持带特殊前缀�
 
 FileCopyUtils 还提供了多个将文件内容拷贝到各种目标对象中的方法，这些方法包括：
 
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
