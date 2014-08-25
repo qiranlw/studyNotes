@@ -151,8 +151,13 @@ ResourceUtils 的 getFile(String resourceLocation) 方法支持带特殊前缀�
 
 FileCopyUtils 还提供了多个将文件内容拷贝到各种目标对象中的方法，这些方法包括：
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| 方法                                              | 说明                                             |
+| ------------------------------------------------- |:------------------------------------------------:|
+| static void copy(byte[] in, File out)             | 将 byte[] 拷贝到一个文件中                       |
+| static void copy(byte[] in, OutputStream out)     | 将 byte[] 拷贝到一个输出流中                     |
+| static int copy(File in, File out)                | 将文件拷贝到另一个文件中                         |
+| static int copy(InputStream in, OutputStream out) | 将输入流拷贝到输出流中                           |
+| static int copy(Reader in, Writer out)            | 将 Reader 读取的内容拷贝到 Writer 指向目标输出中 |
+| static void copy(String in, Writer out)           | 将字符串拷贝到一个 Writer 指向的目标中           |
+
+在实例中，我们虽然使用 Resource 加载文件资源，但 FileCopyUtils 本身和 Resource 没有任何关系，您完全可以在基于 JDK I/O API 的程序中使用这个工具类。
