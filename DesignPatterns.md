@@ -18,16 +18,18 @@
 
 单例模式：确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。
 
-	`public class Singleton {
-		private static final Singleton singleton = new Singleton();
-		private Singleton(){
-		}
-		public static Singleton getInstance(){
-			return this.singleton;
-		}
-		public static void doSomething(){
-		}
-	}`
+```java
+public class Singleton {
+	private static final Singleton singleton = new Singleton();
+	private Singleton(){
+	}
+	public static Singleton getInstance(){
+		return this.singleton;
+	}
+	public static void doSomething(){
+	}
+}
+```
 #### 优点
 * 减少内存开支
 * 减少系统性能开销
