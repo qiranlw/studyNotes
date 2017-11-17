@@ -1,17 +1,17 @@
 # 《jQuery高级编程》笔记 #
 
-#第一章jQuery入门#
-##1.1jQuery引用##
+# 第一章jQuery入门 #
+## 1.1jQuery引用 ##
 
 	<scripttype="text/javascript"src="jquery.min.js"></script>
 
-##1.2示例##
+## 1.2示例 ##
 
 	jQuery(document).ready(function(){
 		alert('HelloWorld!');
 	});
 
-##1.3类型检查##
+## 1.3类型检查 ##
 
 	对象					类型检查表达式
 	String				typeofobject==="string"
@@ -36,9 +36,9 @@
 	LocalVariables		variable===undefined
 	Properties			object.prop===undefined
 
-#第二章JavaScript基础#
+# 第二章JavaScript基础 #
 
-##2.1理解数值##
+## 2.1理解数值 ##
 
 	varnum=1234.5678;
 	num.toFixed(2);				//按照固定位数的小数格式化数值(小数点后有效位数)，四舍五入
@@ -47,20 +47,20 @@
 	NaN							//"非数值"NotaNumber
 	Math.round(num)				//取整数，四舍五入
 
-##2.2字符串##
+## 2.2字符串 ##
 
 	varstring="TestString";
 	string.indexOf("S");		//5,获取字符在字符串中第一次出现的位置
 	string.charAt(5);			//"S",获取字符串中下标为5的字符
 
-##2.3布尔类型##
+## 2.3布尔类型 ##
 
 	'',NaN,null,undefined,0,false为判断值时均为false，其他的任何值都是true.
 	typeofNaN//number
 	1=="1"//true
 	1==="1"//false
 
-##2.4JavaScript各种数据类型##
+## 2.4JavaScript各种数据类型 ##
 
 	Number
 	String
@@ -80,7 +80,7 @@
 		TypeError
 		URIError
 
-##2.5理解对象##
+## 2.5理解对象 ##
 	varmyObject=newObject();
 	
 	functionZombie(name){
@@ -124,15 +124,15 @@
 		console.log('Testeslikechicken');
 	}
 
-##2.6作用域和闭包##
+## 2.6作用域和闭包 ##
 
-##2.7理解访问级别##
+## 2.7理解访问级别 ##
 
-##2.8使用模块##
+## 2.8使用模块 ##
 
-##2.9JavaScript数组##
+## 2.9JavaScript数组 ##
 
-##2.10扩展类型##
+## 2.10扩展类型 ##
 
 	String.prototype.boolean=function(){
 		return"true"==this;
@@ -148,7 +148,7 @@
 	});
 	'true'.boolean();//True
 
-##2.11JavaScript最佳实践##
+## 2.11JavaScript最佳实践 ##
 
 - (1)数组转型
 
@@ -164,8 +164,8 @@
 - (8)不要使用with语句。
 - (9)在循环中创建函数应该谨慎小心。
 
-#第三章jQuery核心技术#
-##3.1jQuery脚本的结构##
+# 第三章jQuery核心技术 #
+## .1jQuery脚本的结构 ##
 
 	方法			分类		描述
 	.ready()		事件		声明函数，当DOM完全加载后运行
@@ -178,7 +178,7 @@
 					/DOM插入	
 	.type()			工具方法	判断一个对象在JavaScript内部的类型
 
-###3.1.1工具函数###
+### 3.1.1工具函数 ###
 	1.对象
 		$.type(object);//检查对象的类型
 		$.isEmptyObject(object);//检查对象是否包含任何属性
@@ -211,5 +211,5 @@
 		$.isXMLDoc();//检查一个DOM节点是否属于一个XML文档
 		$.parseJSON();//将JSON串转成一个对象
 
-##3.2非侵入式JavaScript##
+## 3.2非侵入式JavaScript ##
 
