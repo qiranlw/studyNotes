@@ -19,16 +19,53 @@
 单例模式：确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。
 
 ```java
+// 饿汉模式
 public class Singleton {
-	private static final Singleton singleton = new Singleton();
+	private static final Singleton instance = new Singleton();
 	private Singleton(){
 		//do something
 	}
 	public static Singleton getInstance(){
-		return this.singleton;
+		return this.instance;
 	}
 	public static void doSomething(){
 	}
+}
+
+// 懒汉模式
+public class Singleton {
+	private static final Singleton instance = null;
+	private Singleton() {
+		// do something
+	}
+	public static Singleton getInstance() {
+		if (instance == null) {
+			sychronized (Singletion.class) {
+				if(instance == null) {
+					instance = new Singleton();
+				}
+			}
+		}
+		return instance;
+	}
+}
+
+// 内部类模式
+public class Singleton {
+	private Singleton() {
+		// do something
+	}
+	private static class SingletonHolder {
+		private static Singleton instance = new Singleton();
+	}
+	public static Singleton getInstance() {
+		return SingletonHolder.instance;
+	}
+}
+
+// 枚举模式
+public enum Singleton {
+	uniqueInstance;
 }
 ```
 #### 优点
